@@ -1,0 +1,47 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WhatsApp Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrapper">  <!-- ✅ wrap everything -->
+    <form method="POST">
+      <h2>📲 WhatsApp Bot</h2>
+
+      <label for="mobile">Mobile Number:</label>
+      <input type="text" id="mobile" name="mobile" placeholder="e.g. +91XXXXXXXXXX" required>
+
+      <label for="message">Message:</label>
+      <input type="text" id="message" name="message" placeholder="Type your message here" required>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div id="countdown">⌛ Preparing to send...</div>
+  </div>
+
+  <script>
+    const form = document.querySelector("form");
+    const countdown = document.getElementById("countdown");
+
+    form.addEventListener("submit", () => {
+      countdown.style.display = "block";
+      countdown.textContent = "⌛ Preparing to send in 5 seconds...";
+
+      let timeLeft = 5;
+      const timer = setInterval(() => {
+        timeLeft--;
+        countdown.textContent = `⌛ Preparing to send in ${timeLeft} second${timeLeft === 1 ? '' : 's'}...`;
+        if (timeLeft === 0) {
+          clearInterval(timer);
+          countdown.textContent = "✅ Sent to WhatsApp Web!";
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+
+</html>
